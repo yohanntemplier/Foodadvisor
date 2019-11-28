@@ -12,6 +12,57 @@ h1{
     font-family: 'Courgette', cursive;
 }
 
+/**navbar**/
+
+.nav-link2{
+    font-family: 'Courgette', cursive;
+    font-size: 35px;
+    margin-left: 40px;
+    color: black;
+    &:hover {
+        color: red;
+    }
+}
+.nav-link2.active-link{
+    color: red;
+}
+
+.nav-link3{
+    font-family: 'Courgette', cursive;
+    font-size: 35px;
+    margin-left: 40px;
+    color: black;
+    &:hover {
+        color: red;
+    }
+}
+.nav-link3.active-link{
+    color: red;
+}
+
+.nav-link4{
+    font-family: 'Courgette', cursive;
+    font-size: 35px;
+    margin-left: 40px;
+    color: black;
+    &:hover {
+        color: red;
+    }
+}
+.nav-link4.active-link{
+    color: red;
+}
+.navbar-toggler{
+    @include base-icon;
+    background-image: url("../images/logof.png");
+    height: 75px;
+    width: 20%;
+}
+.admin{
+    background-color: #0d88c1;
+}
+/**fin de navbar**/
+
 /**admin**/
 .jumbotron-admin {
     background-image: url("../images/theme-restaurant.jpg");
