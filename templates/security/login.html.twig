@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+{% block body %}
+    <div class ="jumbotron-login">
+        <div class="container pt-5">
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <h1 class = "text-center mb-4 pb-4 mt-5">Veuillez vous connecter pour acceder à votre espace Utilisateur</h1>
+                <div class="form-row justify-content-center pb-2">
+                    <div class ="col-6">
+                        <label for="inputUsername" class="sr-only mt-4">Nom d'utilisateur</label>
+                        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control mt-4" placeholder="Nom d'utilisateur" required autofocus>
+                    </div>
+                </div>
+                <div class="form-row justify-content-center pt-2 pb-2">
+                    <div class ="col-6">
+                        <label for="inputPassword" class="sr-only mt-4">Mot de passe</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control mt-4" placeholder="Mot de passe" required>
+                    </div>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <div class="form-row justify-content-center pt-2">
+                    <button class="btn btn-lg btn-primary mt-4 justify-content-center" type="submit">Se connecter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
