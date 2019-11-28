@@ -1,0 +1,24 @@
+@import "~bootstrap/scss/bootstrap";
+@import "vars";
+@import url('https://fonts.googleapis.com/css?family=Courgette&display=swap');
+
+body {
+    background-color: lightgray;
+}
+h1{
+    font-size: 50px;
+}
+.text{
+    font-family: 'Courgette', cursive;
+}
+
+/**admin**/
+.jumbotron-admin {
+    background-image: url("../images/theme-restaurant.jpg");
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+.adminIndex {
+    font-family: 'Courgette', cursive;
+}
