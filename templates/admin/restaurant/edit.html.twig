@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Restaurant{% endblock %}
+
+{% block body %}
+    <h1 class="text text-center pt-3">Modifier le restaurant</h1>
+
+    {{ include('admin/restaurant/_form.html.twig', {'button_label': 'modifier'}) }}
+
+{% endblock %}
