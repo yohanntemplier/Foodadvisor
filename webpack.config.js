@@ -25,6 +25,7 @@ Encore
      */
     .addEntry('app', './assets/js/app.js')
     .addEntry('logo_Admin', './assets/images/logofoodadmin.png')
+    .addEntry('logo_Home', './assets/images/logofood.png')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

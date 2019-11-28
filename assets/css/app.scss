@@ -12,7 +12,7 @@ h1{
     font-family: 'Courgette', cursive;
 }
 
-/**navbar**/
+/**navbarAdmin**/
 
 .nav-link2{
     font-family: 'Courgette', cursive;
@@ -61,7 +61,7 @@ h1{
 .admin{
     background-color: #0d88c1;
 }
-/**fin de navbar**/
+/**fin de navbarAdmin**/
 
 /**admin**/
 .jumbotron-admin {
@@ -73,3 +73,18 @@ h1{
 .adminIndex {
     font-family: 'Courgette', cursive;
 }
+
+/**fin admin**/
+
+/**homepage**/
+.btn-visitor{
+    font-family: 'Courgette', cursive;
+    font-size: 30px;
+    background-color: #1b607f;
+    color: white;
+    &:hover{
+        background-color: #6C868E;
+        color: white;
+    }
+}
+/**fin homepage**/
