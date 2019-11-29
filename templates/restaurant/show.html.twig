@@ -1,50 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Restaurant{% endblock %}
-
+{% block title %}{{restaurant.name}}{% endblock %}
 {% block body %}
-    <h1>Restaurant</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ restaurant.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ restaurant.name }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ restaurant.type }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ restaurant.city }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ restaurant.address }}</td>
-            </tr>
-            <tr>
-                <th>Postal_code</th>
-                <td>{{ restaurant.postalCode }}</td>
-            </tr>
-            <tr>
-                <th>Site</th>
-                <td>{{ restaurant.site }}</td>
-            </tr>
-            <tr>
-                <th>Pictures</th>
-                <td>{{ restaurant.pictures }}</td>
-            </tr>
-        </tbody>
-    </table>
+                </div>
+                <div class="col-md-5">
+                    <h1>{{restaurant.name}}</h1>
+                    <h2>{{ restaurant.address }} {{ restaurant.postalcode }} {{restaurant.city}}</h2>
 
-    <a href="{{ path('restaurant_index') }}">back to list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class ="container mt-4 justify-content-center show-restaurant">
 
-    <a href="{{ path('restaurant_edit', {'id': restaurant.id}) }}">edit</a>
-
-    {{ include('restaurant/_delete_form.html.twig') }}
+        <div class ="row">
+            <div class ="col-md-4">
+                <h2 class="text pb-4">Caractéristiques</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <td><strong>Type de nourriture:</strong></td>
+                        <td>{{ restaurant.type }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Site web du restaurant:</strong></td>
+                        <td>{{ restaurant.site }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-8">
+                <h2 class="text text-center">Localisation</h2>
+            </div>
+        </div>
+    </div>
 {% endblock %}
