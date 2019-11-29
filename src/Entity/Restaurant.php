@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RestaurantRepository")
@@ -66,6 +67,11 @@ class Restaurant
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getSlug():string
+    {
+        return (new Slugify())->slugify($this->name);
     }
 
     public function getType(): ?string

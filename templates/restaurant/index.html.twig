@@ -9,9 +9,10 @@
         {% for restaurant in restaurants %}
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <div class="text text-center">
-                        {{ restaurant.name }}
-                    </div>
+                    <h3 class="text text-center"><a href="{{ path('restaurant_show',{slug: restaurant.slug, id: restaurant.id}) }}">
+                        {{ restaurant.name }}</a>
+                    </h3>
+                    <h5 class="text text-center">{{ restaurant.city }} ({{ restaurant.postalcode }})</h5>
                 </div>
             </div>
         {% endfor %}

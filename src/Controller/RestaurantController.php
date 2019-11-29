@@ -25,7 +25,7 @@ class RestaurantController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="restaurant_show", methods={"GET"})
+     * @Route("/{slug}-{id}", name="restaurant_show",requirements={"slug": "[a-z0-9\-]*"} ,methods={"GET","POST"})
      */
     public function show(Restaurant $restaurant): Response
     {
