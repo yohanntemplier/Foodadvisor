@@ -5,6 +5,11 @@
 {% block body %}
 <div class="jumbotron-admin-restaurant">
 <div class ="container text-center justify-content-center">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h1 class="text text-center mt-3 mb-5">Liste des restaurants référencés</h1>
     <a href="{{ path('admin_restaurant_new') }}" class="btn btn-primary mb-5">Ajouter un nouveau restaurant</a>
 

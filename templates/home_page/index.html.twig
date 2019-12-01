@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Foodadvisor{% endblock %}
+
+{% block body %}
+<div class="jumbotron-accueil">
+    <div class="container">
+        <div class="about text">
+            <h2 class="title text mb-4">A propos de Foodadvisor</h2>
+            <div class="card description mb-4 pt-2 pb-2">
+                <P>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
+                    eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
+                    sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
+                    sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+                    Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam,
+                    nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse
+                    quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</P>
+            </div>
+        </div>
+        <div class="restaurant text text-center justify-content-center">
+            <a class="btn btn-restaurant"
+               href="{{ path('restaurant_index') }}"
+               role="button">Les différents restaurants
+            </a>
+        </div>
+
+        <div class="favoris text text-center">
+            <a class="btn btn-favoris"
+               href=""
+               role="button">Les restaurants les mieux notés
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

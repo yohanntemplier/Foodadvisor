@@ -1,6 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
 @import "vars";
 @import url('https://fonts.googleapis.com/css?family=Courgette&display=swap');
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
 
 body {
     background-color: lightgray;
@@ -77,6 +78,13 @@ h1{
 /**fin admin**/
 
 /**homepage**/
+.jumbotron-home{
+    background-image: url("../images/index.png");
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+
 .btn-visitor{
     font-family: 'Courgette', cursive;
     font-size: 30px;
@@ -92,4 +100,48 @@ h1{
 .show-restaurant{
     background-color: white;
     padding-top: 2em;
+}
+
+.restaurant{
+    font-size: 100px;
+    margin-bottom: 1em;
+}
+.btn-restaurant{
+    font-size: 50px;
+    color: #0a0a0a;
+}
+.favoris{
+    font-size: 100px;
+}
+.btn-favoris{
+    font-size: 50px;
+    color: #0a0a0a;
+}
+.jumbotron-accueil{
+    background-image: url("../images/accueil.jpg");
+    background-size: cover;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    background-attachment: fixed;
+    width: 100%;
+    height: 100%;
+}
+.homePage{
+    margin-bottom: -2em;
+    background-color: #fffbcc;
+}
+.title{
+    color: #0a0a0a;
+}
+.description{
+    border-radius: 3%;
+}
+.about{
+    margin-top: 2em;
+    padding-top: 4em;
+    margin-bottom: 2em;
+}
+.page-footer{
+    background-color: #fffbcc;
 }

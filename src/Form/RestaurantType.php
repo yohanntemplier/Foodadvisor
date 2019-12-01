@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Restaurant;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +15,18 @@ class RestaurantType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('type')
+            ->add('type', ChoiceType::class , [
+                'choices'=> [
+                    'Fast Food' => 'Fast Food',
+                    'Asiatique' => 'Asiatique',
+                    'Indien' => 'Indien',
+                    'Grill' => 'Grill',
+                    'Mexicain' => 'Mexicain',
+                    'Cafétéria' => 'Cafétéria',
+                    'Pizzeria' => 'Pizzeria',
+                    'Grec' => 'Grec',
+                    'Autre' => 'Autre',]
+                ])
             ->add('city')
             ->add('address')
             ->add('postal_code')

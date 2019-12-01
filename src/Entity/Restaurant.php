@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RestaurantRepository")
+ * @UniqueEntity("name")
  */
 class Restaurant
 {
@@ -39,11 +42,13 @@ class Restaurant
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex("/^[0-9]{5}$/")
      */
     private $postal_code;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url
      */
     private $site;
 
