@@ -51,6 +51,7 @@ class AdminController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($restaurant);
             $entityManager->flush();
+            $this->addFlash('success','Votre restaurant est bien enregistré');
 
             return $this->redirectToRoute('admin_restaurant_index');
         }
@@ -72,6 +73,7 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success','Votre modification est bien enregistrée');
 
             return $this->redirectToRoute('admin_restaurant_index');
         }
@@ -91,6 +93,7 @@ class AdminController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($restaurant);
             $entityManager->flush();
+            $this->addFlash('success','Votre suppréssion est bien enregistrée');
         }
 
         return $this->redirectToRoute('admin_restaurant_index');

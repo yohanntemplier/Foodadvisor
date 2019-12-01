@@ -1,0 +1,23 @@
+<div class="homePage">
+    <nav class="navbar navbar-expand-lg navbar-home">
+        <div class="logo">
+            <a class="navbar-brand" href="{{ path('home_page') }}"><img src="{{ asset('build/images/logofoodadmin.png') }}" alt="logo_Food" class="logo Food"></a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-supported-content" aria-controls="navbar-supported-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-supported-content">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link2 {{ app.request.attributes.get('_route') == 'restaurant_index' ? 'active-link' }}" href="{{ path('restaurant_index')}}">Restaurants</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link3" href="#">Favoris</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link4" href="#">Suggestions</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
