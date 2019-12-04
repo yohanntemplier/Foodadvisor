@@ -32,6 +32,14 @@ class RestaurantType extends AbstractType
             ->add('postal_code')
             ->add('site')
             ->add('pictures', HiddenType::class)
+            ->add('cost', ChoiceType::class,[
+                'choices'=>[
+                    '€' => '€',
+                    '€-€€' => '€-€€',
+                    '€€-€€€' => '€€-€€€',
+                    '€€€' => '€€€',
+                ]
+            ])
         ;
     }
 

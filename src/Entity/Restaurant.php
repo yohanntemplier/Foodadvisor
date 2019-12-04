@@ -57,6 +57,29 @@ class Restaurant
      */
     private $pictures;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $cost;
+
+    /**
+     * @return mixed
+     */
+    public function getCost()
+    {
+        return $this->cost;
+    }
+
+    /**
+     * @param mixed $cost
+     * @return Restaurant
+     */
+    public function setCost($cost)
+    {
+        $this->cost = $cost;
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -150,4 +173,5 @@ class Restaurant
 
         return $this;
     }
+
 }
