@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Restaurant;
+use App\Entity\RestaurantSearch;
+use App\Form\RestaurantSearchType;
+use App\Form\SearchRestaurantType;
 use App\Repository\RestaurantRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,11 +23,26 @@ class RestaurantController extends AbstractController
      */
     public function index(RestaurantRepository $restaurantRepository, PaginatorInterface $paginator, Request $request): Response
     {
+
+        $form = $this->createForm(SearchRestaurantType::class);
+        $form->handleRequest($request);
+
+        $restaurants = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $restaurants = $restaurantRepository->findRestaurants($data);
+        } else {
+            $restaurants = $this->getDoctrine()->getRepository(Restaurant::Class)
+                ->findAll();
+        }
+
         $restaurant=$restaurantRepository->findAll();
-        $restaurants = $paginator->paginate($restaurant, $request->query->getInt('page', 1), /*page number*/
+        $resto = $paginator->paginate($restaurant, $request->query->getInt('page', 1), /*page number*/
             6 /*limit per page*/);
         return $this->render('restaurant/index.html.twig', [
-            'restaurants' => $restaurants,
+            'resto' => $resto,
+            'restaurants'=> $restaurants,
+            'form'        => $form->createView()
         ]);
     }
 

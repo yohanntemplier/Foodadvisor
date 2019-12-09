@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Restaurant;
+use App\Form\SearchRestaurantType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,32 +20,36 @@ class RestaurantRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurant::class);
     }
 
-    // /**
-    //  * @return Restaurant[] Returns an array of Restaurant objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findRestaurants($data)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Restaurant
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $builder = $this->createQueryBuilder('r')
+            ->orWhere('r.name LIKE :input')
+            ->setParameter('input', '%' . $data[SearchRestaurantType::NAME] . '%')
+            ->orderBy('r.name', 'ASC');
+
+
+        if (!empty($data[SearchRestaurantType::TYPE])) {
+            $builder
+                ->andWhere('r.type = :type')
+                ->orderBy('r.name', 'ASC')
+                ->setParameter('type', $data[SearchRestaurantType::TYPE]);
+        }
+
+        return $builder->getQuery()->getResult();
     }
-    */
+
+    public function findType()
+    {
+        $qb = $this->createQueryBuilder('r');
+        $qb->select('r.type')
+            ->groupBy('r.type')
+            ->orderBy('r.type', 'ASC');
+
+        $result = $qb
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($result, 'type');
+    }
 }
