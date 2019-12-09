@@ -1,20 +1,21 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello HomeController!{% endblock %}
-
+{% block title %}FOODadvisor{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class ="jumbotron-home">
+        <div class="container">
+            <div class="row row-logo-band justify-content-center pb-5 pt-4">
+                <img src="{{ asset('build/images/logofood.png') }}" alt="logo_Home" class="logo Home">
+            </div>
+            <h1 class="text text-center pt-3 pb-2">Bienvenue sur FOODadvisor</h1>
+            <h4 class="text text-center pb-5">Retrouvez l'ensemble des restaurants déjà testé proche de chez vous.</h4>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/yohann/projets/Foodadvisor/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/yohann/projets/Foodadvisor/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+            <div class ="row justify-content-center pt-4 mt-2">
+                <div class ="col visitor">
+                    <div class="visitors mt-2 text-center">
+                        <a href="{{ path('home_page') }}" class="btn btn-visitor" role="button">Faites plaisir à vos papilles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

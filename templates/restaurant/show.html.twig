@@ -1,0 +1,42 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{restaurant.name}}{% endblock %}
+{% block body %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+
+                </div>
+                <div class="col-md-5">
+                    <h1>{{restaurant.name}}</h1>
+                    <h2>{{ restaurant.address }} {{ restaurant.postalcode }} {{restaurant.city}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class ="container mt-4 mb-5 justify-content-center show-restaurant">
+        <div class ="row">
+            <div class ="col-md-5">
+                <h2 class="text pb-4">Caractéristiques</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <td><strong>Type de nourriture:</strong></td>
+                        <td>{{ restaurant.type }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Site web du restaurant:</strong></td>
+                        <td><a href="{{ restaurant.site }}">{{ restaurant.site }}</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Coût moyen:</strong></td>
+                        <td>{{ restaurant.cost }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-7">
+                <h2 class="text text-center">Localisation</h2>
+            </div>
+        </div>
+    </div>
+{% endblock %}

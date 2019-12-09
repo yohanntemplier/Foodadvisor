@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Restaurant index{% endblock %}
+
+{% block body %}
+<div class="jumbotron">
+   <div class="container-search">
+       {{ form_start(form) }}
+       <div class="form-row align-items-end">
+           <div class="col">
+               <strong>Nom du restaurant :</strong>
+               {{ form_row(form.name) }}
+           </div>
+           <div class="col">
+               <strong>Type de restaurant :</strong>
+               {{ form_row(form.type) }}
+           </div>
+           <div class="col">
+               <button class="btn btn-primary">Rechercher</button>
+           </div>
+       </div>
+       {{ form_end(form) }}
+   </div>
+</div>
+<div class ="container mt-4">
+    <h1 class ="text text-center mb-5">La liste des restaurants</h1>
+    <div class="row">
+        {% for restaurant in restaurants %}
+            <div class="col-md-4">
+                <div class="card mb-5">
+                    <h3 class="text text-center"><a href="{{ path('restaurant_show',{slug: restaurant.slug, id: restaurant.id}) }}">
+                        {{ restaurant.name }}</a>
+                    </h3>
+                    <h5 class="text text-center">{{ restaurant.city }} ({{ restaurant.postalcode }})</h5>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination justify-content-center">
+        {{ knp_pagination_render(resto) }}
+    </div>
+</div>
+{% endblock %}

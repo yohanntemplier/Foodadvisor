@@ -1,0 +1,10 @@
+{% extends 'layoutAdmin.html.twig' %}
+
+{% block title %}New Restaurant{% endblock %}
+
+{% block body %}
+    <h1 class="text text-center pt-3">Ajouter un nouveau restaurant</h1>
+
+    {{ include('admin/restaurant/_form.html.twig') }}
+
+{% endblock %}
