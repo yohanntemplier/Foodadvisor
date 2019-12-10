@@ -17,7 +17,7 @@ h1{
 
 .nav-link2{
     font-family: 'Courgette', cursive;
-    font-size: 35px;
+    font-size: 20px;
     margin-left: 40px;
     color: black;
     &:hover {
@@ -30,7 +30,7 @@ h1{
 
 .nav-link3{
     font-family: 'Courgette', cursive;
-    font-size: 35px;
+    font-size: 20px;
     margin-left: 40px;
     color: black;
     &:hover {
@@ -43,7 +43,7 @@ h1{
 
 .nav-link4{
     font-family: 'Courgette', cursive;
-    font-size: 35px;
+    font-size: 20px;
     margin-left: 40px;
     color: black;
     &:hover {
@@ -53,6 +53,20 @@ h1{
 .nav-link4.active-link{
     color: red;
 }
+
+.nav-link5{
+    font-family: 'Courgette', cursive;
+    font-size: 20px;
+    margin-left: 40px;
+    color: black;
+    &:hover {
+        color: red;
+    }
+}
+.nav-link5.active-link{
+    color: red;
+}
+
 .navbar-toggler{
     @include base-icon;
     background-image: url("../images/logof.png");

@@ -15,6 +15,9 @@
                     <a class="nav-link3 {{ app.request.attributes.get('_route') == 'admin_restaurant_index' ? 'active-link' }}" href="{{ path('admin_restaurant_index')}}">Restaurants</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link5 {{ app.request.attributes.get('_route') == 'admin_caracteristic_index' ? 'active-link' }}" href="{{ path('admin_caracteristic_index')}}">Caractéristiques</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link4" href="#">Commentaires</a>
                 </li>
             </ul>
