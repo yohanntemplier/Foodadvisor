@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Caracteristic;
 use App\Entity\Restaurant;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -31,6 +33,11 @@ class RestaurantType extends AbstractType
             ->add('address')
             ->add('postal_code')
             ->add('site')
+            ->add('caracteristics', EntityType::class, [
+                'class' => Caracteristic::class,
+                'choice_label' => 'name',
+                'multiple' => true
+            ])
             ->add('pictures', HiddenType::class)
             ->add('cost', ChoiceType::class,[
                 'choices'=>[

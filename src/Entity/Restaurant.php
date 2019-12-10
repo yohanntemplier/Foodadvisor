@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -61,6 +63,16 @@ class Restaurant
      * @ORM\Column(type="string", length=255)
      */
     private $cost;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Caracteristic", inversedBy="restaurants")
+     */
+    private $caracteristics;
+
+    public function __construct()
+    {
+        $this->caracteristics = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -170,6 +182,34 @@ class Restaurant
     public function setPictures(?string $pictures): self
     {
         $this->pictures = $pictures;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Caracteristic[]
+     */
+    public function getCaracteristics(): Collection
+    {
+        return $this->caracteristics;
+    }
+
+    public function addCaracteristic(Caracteristic $caracteristic): self
+    {
+        if (!$this->caracteristics->contains($caracteristic)) {
+            $this->caracteristics[] = $caracteristic;
+            $caracteristic->addRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaracteristic(Caracteristic $caracteristic): self
+    {
+        if ($this->caracteristics->contains($caracteristic)) {
+            $this->caracteristics->removeElement($caracteristic);
+            $caracteristic->removeRestaurant($this);
+        }
 
         return $this;
     }
