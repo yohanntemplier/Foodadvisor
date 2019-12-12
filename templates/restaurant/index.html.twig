@@ -12,8 +12,16 @@
                {{ form_row(form.name) }}
            </div>
            <div class="col">
+               <strong>Ville :</strong>
+               {{ form_row(form.city) }}
+           </div>
+           <div class="col">
                <strong>Type de restaurant :</strong>
                {{ form_row(form.type) }}
+           </div>
+           <div class="col">
+               <strong>Panier moyen :</strong>
+               {{ form_row(form.cost) }}
            </div>
            <div class="col">
                <button class="btn btn-primary">Rechercher</button>
@@ -31,7 +39,7 @@
                     <h3 class="text text-center"><a href="{{ path('restaurant_show',{slug: restaurant.slug, id: restaurant.id}) }}">
                         {{ restaurant.name }}</a>
                     </h3>
-                    <h5 class="text text-center">{{ restaurant.city }} ({{ restaurant.postalcode }})</h5>
+                    <h5 class="text-center">{{ restaurant.city }} ({{ restaurant.postalcode }})</h5>
                 </div>
             </div>
         {% endfor %}

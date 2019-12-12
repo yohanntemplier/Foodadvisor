@@ -13,6 +13,8 @@ class SearchRestaurantType extends AbstractType
 {
     const NAME = 'name';
     const TYPE = 'type';
+    const COST = 'cost';
+    const CITY = 'city';
 
     private $restaurantRepository;
 
@@ -29,6 +31,24 @@ class SearchRestaurantType extends AbstractType
                 'required' => false])
             ->add(self::TYPE, ChoiceType::class, [
                 'choices' => $this->restaurantRepository->findType(),
+                'choice_label' => function ($choice, $key, $value) {
+                    return $value;
+                },
+                'required' => false,
+                'placeholder' => '',
+                'label' => false,
+            ])
+            ->add(self::COST,ChoiceType::class, [
+                'choices'=>$this->restaurantRepository->findCost(),
+                'choice_label' => function ($choice, $key, $value) {
+                    return $value;
+                },
+                'required' => false,
+                'placeholder' => '',
+                'label' => false,
+            ])
+            ->add(self::CITY,ChoiceType::class, [
+                'choices'=>$this->restaurantRepository->findCity(),
                 'choice_label' => function ($choice, $key, $value) {
                     return $value;
                 },
