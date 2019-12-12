@@ -42,6 +42,12 @@
             {{ form_widget(form.caracteristics) }}
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6 mt-4 mb-4">
+            {{ form_label(form.paiements, 'Moyens de paiement accéptés') }}
+            {{ form_widget(form.paiements) }}
+        </div>
+    </div>
 
     <div class="form-row justify-content-center text-center m-2">
         <button type="submit" class="btn btn-primary btn-lg">

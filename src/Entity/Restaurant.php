@@ -69,9 +69,15 @@ class Restaurant
      */
     private $caracteristics;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Paiement", inversedBy="restaurants")
+     */
+    private $paiements;
+
     public function __construct()
     {
         $this->caracteristics = new ArrayCollection();
+        $this->paiements = new ArrayCollection();
     }
 
     /**
@@ -209,6 +215,34 @@ class Restaurant
         if ($this->caracteristics->contains($caracteristic)) {
             $this->caracteristics->removeElement($caracteristic);
             $caracteristic->removeRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Paiement[]
+     */
+    public function getPaiements(): Collection
+    {
+        return $this->paiements;
+    }
+
+    public function addPaiement(Paiement $paiement): self
+    {
+        if (!$this->paiements->contains($paiement)) {
+            $this->paiements[] = $paiement;
+            $paiement->addRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaiement(Paiement $paiement): self
+    {
+        if ($this->paiements->contains($paiement)) {
+            $this->paiements->removeElement($paiement);
+            $paiement->removeRestaurant($this);
         }
 
         return $this;
