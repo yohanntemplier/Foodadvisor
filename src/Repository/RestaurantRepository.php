@@ -36,6 +36,20 @@ class RestaurantRepository extends ServiceEntityRepository
                 ->setParameter('type', $data[SearchRestaurantType::TYPE]);
         }
 
+        if (!empty($data[SearchRestaurantType::COST])) {
+            $builder
+                ->andWhere('r.cost = :cost')
+                ->orderBy('r.name', 'ASC')
+                ->setParameter('cost', $data[SearchRestaurantType::COST]);
+        }
+
+        if (!empty($data[SearchRestaurantType::CITY])) {
+            $builder
+                ->andWhere('r.city = :city')
+                ->orderBy('r.name', 'ASC')
+                ->setParameter('city', $data[SearchRestaurantType::CITY]);
+        }
+
         return $builder->getQuery()->getResult();
     }
 
@@ -53,4 +67,31 @@ class RestaurantRepository extends ServiceEntityRepository
         return array_column($result, 'type');
     }
 
+    public function findCost()
+    {
+        $qb = $this->createQueryBuilder('r');
+        $qb->select('r.cost')
+            ->groupBy('r.cost')
+            ->orderBy('r.cost', 'ASC');
+
+        $result = $qb
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($result, 'cost');
+    }
+
+    public function findCity()
+    {
+        $qb = $this->createQueryBuilder('r');
+        $qb->select('r.city')
+            ->groupBy('r.city')
+            ->orderBy('r.city', 'ASC');
+
+        $result = $qb
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($result, 'city');
+    }
 }
