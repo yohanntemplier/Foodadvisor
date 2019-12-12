@@ -52,4 +52,5 @@ class RestaurantRepository extends ServiceEntityRepository
 
         return array_column($result, 'type');
     }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Caracteristic;
+use App\Entity\Paiement;
 use App\Entity\Restaurant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -35,6 +36,11 @@ class RestaurantType extends AbstractType
             ->add('site')
             ->add('caracteristics', EntityType::class, [
                 'class' => Caracteristic::class,
+                'choice_label' => 'name',
+                'multiple' => true
+            ])
+            ->add('paiements', EntityType::class, [
+                'class' => Paiement::class,
                 'choice_label' => 'name',
                 'multiple' => true
             ])

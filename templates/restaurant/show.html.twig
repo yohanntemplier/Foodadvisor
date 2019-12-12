@@ -52,6 +52,17 @@
         <div class ="row mt-3">
             <div class ="col-md-5">
                 <h2 class="text pb-4">Moyens de paiement</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <td>
+                            <ul>
+                                {% for paiement in restaurant.paiements %}
+                                    <li>{{ paiement.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="col-md-7">
                 <h2 class="text text-center pb-4">Localisation</h2>
