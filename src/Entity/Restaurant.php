@@ -74,6 +74,16 @@ class Restaurant
      */
     private $paiements;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $openingTime;
+
     public function __construct()
     {
         $this->caracteristics = new ArrayCollection();
@@ -244,6 +254,30 @@ class Restaurant
             $this->paiements->removeElement($paiement);
             $paiement->removeRestaurant($this);
         }
+
+        return $this;
+    }
+
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(int $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getOpeningTime(): ?string
+    {
+        return $this->openingTime;
+    }
+
+    public function setOpeningTime(string $openingTime): self
+    {
+        $this->openingTime = $openingTime;
 
         return $this;
     }
