@@ -34,6 +34,16 @@
     </div>
     <div class="row">
         <div class="col-md-6 mt-4 mb-4">
+            {{ form_label(form.phone, 'Numéro de téléphone du restaurant') }}
+            {{ form_widget(form.phone) }}
+        </div>
+        <div class="col-md-6 mt-4 mb-4">
+            {{ form_label(form.openingTime, 'Horaires d\'ouverture') }}
+            {{ form_widget(form.openingTime) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mt-4 mb-4">
             {{ form_label(form.cost, 'Coût moyen') }}
             {{ form_widget(form.cost) }}
         </div>

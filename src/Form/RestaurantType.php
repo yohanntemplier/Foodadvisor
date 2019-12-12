@@ -53,6 +53,8 @@ class RestaurantType extends AbstractType
                     '€€€' => '€€€',
                 ]
             ])
+            ->add('phone')
+            ->add('openingTime')
         ;
     }
 
