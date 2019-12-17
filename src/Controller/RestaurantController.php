@@ -7,6 +7,7 @@ use App\Entity\RestaurantSearch;
 use App\Form\RestaurantSearchType;
 use App\Form\SearchRestaurantType;
 use App\Repository\RestaurantRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,31 +19,22 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class RestaurantController extends AbstractController
 {
+
     /**
      * @Route("/", name="restaurant_index", methods={"GET"})
      */
     public function index(RestaurantRepository $restaurantRepository, PaginatorInterface $paginator, Request $request): Response
     {
-
-        $form = $this->createForm(SearchRestaurantType::class);
+        $search = new RestaurantSearch();
+        $form = $this->createForm(RestaurantSearchType::class, $search);
         $form->handleRequest($request);
 
-        $restaurants = [];
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $restaurants = $restaurantRepository->findRestaurants($data);
-        } else {
-            $restaurants = $this->getDoctrine()->getRepository(Restaurant::Class)
-                ->findAll();
-        }
-
-        $restaurant=$restaurantRepository->findAll();
-        $resto = $paginator->paginate($restaurant, $request->query->getInt('page', 1),
-            6);
+        $restaurant = $restaurantRepository->findAllRestaurantsQuery($search);
+        $restaurants = $paginator->paginate($restaurant, $request->query->getInt('page', 1), /*page number*/
+            6 /*limit per page*/);
         return $this->render('restaurant/index.html.twig', [
-            'resto' => $resto,
             'restaurants'=> $restaurants,
-            'form'        => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
