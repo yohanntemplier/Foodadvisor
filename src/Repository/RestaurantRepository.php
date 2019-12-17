@@ -3,9 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Restaurant;
+use App\Entity\RestaurantSearch;
 use App\Form\SearchRestaurantType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Restaurant|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,78 +23,41 @@ class RestaurantRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurant::class);
     }
 
-    public function findRestaurants($data)
+    /**
+     * @return Query
+     */
+    public function findAllRestaurantsQuery(RestaurantSearch $search): Query
     {
+        $query = $this->findRestaurantsQuery();
 
-        $builder = $this->createQueryBuilder('r')
-            ->orWhere('r.name LIKE :input')
-            ->setParameter('input', '%' . $data[SearchRestaurantType::NAME] . '%')
+        if($search->getName()){
+            $query = $query
+                ->andWhere('r.name LIKE :name')
+                ->setParameter('name', '%' . $search->getName() . '%')
+                ->orderBy('r.name', 'ASC');
+        }
+
+        if($search->getType()){
+            $query = $query
+                ->andWhere('r.type LIKE :type')
+                ->setParameter('type', '%' . $search->getType() . '%')
+                ->orderBy('r.name', 'ASC');
+        }
+
+        if($search->getCost()){
+            $query = $query
+                ->andWhere('r.cost LIKE :cost')
+                ->setParameter('cost', '%' . $search->getCost() . '%')
+                ->orderBy('r.name', 'ASC');
+        }
+
+        return $query->getQuery();
+    }
+
+    private function findRestaurantsQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('r')
             ->orderBy('r.name', 'ASC');
-
-
-        if (!empty($data[SearchRestaurantType::TYPE])) {
-            $builder
-                ->andWhere('r.type = :type')
-                ->orderBy('r.name', 'ASC')
-                ->setParameter('type', $data[SearchRestaurantType::TYPE]);
-        }
-
-        if (!empty($data[SearchRestaurantType::COST])) {
-            $builder
-                ->andWhere('r.cost = :cost')
-                ->orderBy('r.name', 'ASC')
-                ->setParameter('cost', $data[SearchRestaurantType::COST]);
-        }
-
-        if (!empty($data[SearchRestaurantType::CITY])) {
-            $builder
-                ->andWhere('r.city = :city')
-                ->orderBy('r.name', 'ASC')
-                ->setParameter('city', $data[SearchRestaurantType::CITY]);
-        }
-
-        return $builder->getQuery()->getResult();
     }
 
-    public function findType()
-    {
-        $qb = $this->createQueryBuilder('r');
-        $qb->select('r.type')
-            ->groupBy('r.type')
-            ->orderBy('r.type', 'ASC');
-
-        $result = $qb
-            ->getQuery()
-            ->getArrayResult();
-
-        return array_column($result, 'type');
-    }
-
-    public function findCost()
-    {
-        $qb = $this->createQueryBuilder('r');
-        $qb->select('r.cost')
-            ->groupBy('r.cost')
-            ->orderBy('r.cost', 'ASC');
-
-        $result = $qb
-            ->getQuery()
-            ->getArrayResult();
-
-        return array_column($result, 'cost');
-    }
-
-    public function findCity()
-    {
-        $qb = $this->createQueryBuilder('r');
-        $qb->select('r.city')
-            ->groupBy('r.city')
-            ->orderBy('r.city', 'ASC');
-
-        $result = $qb
-            ->getQuery()
-            ->getArrayResult();
-
-        return array_column($result, 'city');
-    }
 }
