@@ -45,10 +45,10 @@ class RestaurantType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true
             ])
-            ->add('imageFile', FileType::class, [
-                'required' => false
+            ->add('pictureFiles', FileType::class, [
+                'required' => false,
+                'multiple' => true
             ])
-            ->add('pictures', HiddenType::class)
             ->add('cost', ChoiceType::class,[
                 'choices'=>[
                     '€' => '€',

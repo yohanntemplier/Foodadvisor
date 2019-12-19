@@ -14,7 +14,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RestaurantRepository")
  * @UniqueEntity("name")
- * @Vich\Uploadable
  */
 class Restaurant
 {
@@ -24,19 +23,6 @@ class Restaurant
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $filename;
-
-    /**
-     * @Vich\UploadableField(mapping="restaurant_image", fileNameProperty="filename")
-     * @var File|null
-     *
-     */
-    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -71,11 +57,6 @@ class Restaurant
     private $site;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $pictures;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $cost;
@@ -106,10 +87,18 @@ class Restaurant
      */
     private $updated_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="restaurant", orphanRemoval=true, cascade={"persist"})
+     */
+    private $pictures;
+
+    private $pictureFiles;
+
     public function __construct()
     {
         $this->caracteristics = new ArrayCollection();
         $this->paiements = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     /**
@@ -212,19 +201,7 @@ class Restaurant
         return $this;
     }
 
-    public function getPictures(): ?string
-    {
-        return $this->pictures;
-    }
-
-    public function setPictures(?string $pictures): self
-    {
-        $this->pictures = $pictures;
-
-        return $this;
-    }
-
-    /**
+     /**
      * @return Collection|Caracteristic[]
      */
     public function getCaracteristics(): Collection
@@ -304,47 +281,6 @@ class Restaurant
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getFilename(): ?string
-    {
-        return $this->filename;
-    }
-
-    /**
-     * @param string|null $filename
-     * @return Restaurant
-     */
-    public function setFilename(?string $filename): Restaurant
-    {
-        $this->filename = $filename;
-        return $this;
-    }
-
-    /**
-     * @return File|null
-     */
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * @param File|null $imageFile
-     * @return Restaurant
-     */
-    public function setImageFile(?File $imageFile): Restaurant
-    {
-        $this->imageFile = $imageFile;
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updated_at = new \DateTimeImmutable();
-        }
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updated_at;
@@ -357,5 +293,68 @@ class Restaurant
         return $this;
     }
 
+    /**
+     * @return Collection|Picture[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function getPicture(): ?Picture
+    {
+        if($this->pictures->isEmpty()) {
+            return null;
+        } else {
+            return $this->pictures->first();
+        }
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->contains($picture)) {
+            $this->pictures->removeElement($picture);
+            // set the owning side to null (unless already changed)
+            if ($picture->getRestaurant() === $this) {
+                $picture->setRestaurant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPictureFiles()
+    {
+        return $this->pictureFiles;
+    }
+
+    /**
+     * @param mixed $pictureFiles
+     * @return Restaurant
+     */
+    public function setPictureFiles($pictureFiles): self
+    {
+        foreach ($pictureFiles as $pictureFile){
+            $picture = new Picture();
+            $picture->setImageFile($pictureFile);
+            $this->addPicture($picture);
+        }
+
+        $this->pictureFiles = $pictureFiles;
+        return $this;
+    }
 
 }
