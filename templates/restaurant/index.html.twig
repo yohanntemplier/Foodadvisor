@@ -20,6 +20,14 @@
                {{ form_row(form.cost) }}
            </div>
            <div class="col">
+               <strong>Adresse :</strong>
+               {{ form_row(form.address, {'id': 'search_address'}) }}
+           </div>
+           <div class="col">
+               <strong>Distance :</strong>
+               {{ form_row(form.distance) }}
+           </div>
+           <div class="col">
                <button class="btn btn-primary">Rechercher</button>
            </div>
        </div>

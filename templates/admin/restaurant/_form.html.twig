@@ -16,19 +16,13 @@
             {{ form_label(form.address, 'Adresse du restaurant') }}
             {{ form_widget(form.address) }}
         </div>
-        <div class="col-md-6 mt-4 mb-4">
+        <div class="col-md-3 mt-4 mb-4">
             {{ form_label(form.postal_code, 'Code postal') }}
             {{ form_widget(form.postal_code) }}
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 mt-4 mb-4">
+        <div class="col-md-3 mt-4 mb-4">
             {{ form_label(form.city, 'Ville') }}
             {{ form_widget(form.city) }}
-        </div>
-        <div class="col-md-6 mt-4 mb-4">
-            {{ form_label(form.site, 'Site web du restaurant') }}
-            {{ form_widget(form.site) }}
         </div>
     </div>
     <div class="row">
@@ -43,8 +37,14 @@
     </div>
     <div class="row">
         <div class="col-md-6 mt-4 mb-4">
-            {{ form_label(form.cost, 'Coût moyen') }}
-            {{ form_widget(form.cost) }}
+            {{ form_label(form.site, 'Site web du restaurant') }}
+            {{ form_widget(form.site) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mt-4 mb-4">
+            {{ form_label(form.paiements, 'Moyens de paiement accéptés') }}
+            {{ form_widget(form.paiements) }}
         </div>
         <div class="col-md-6 mt-4 mb-4">
             {{ form_label(form.caracteristics, 'Caractéristiques du restaurant') }}
@@ -53,8 +53,8 @@
     </div>
     <div class="row">
         <div class="col-md-6 mt-4 mb-4">
-            {{ form_label(form.paiements, 'Moyens de paiement accéptés') }}
-            {{ form_widget(form.paiements) }}
+            {{ form_label(form.cost, 'Coût moyen') }}
+            {{ form_widget(form.cost) }}
         </div>
         <div class="col-md-6 mt-4 mb-4">
             {{ form_label(form.pictureFiles, 'Photos du restaurant') }}

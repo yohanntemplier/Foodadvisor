@@ -6,6 +6,7 @@ use App\Entity\Restaurant;
 use App\Entity\RestaurantSearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -40,6 +41,22 @@ class RestaurantSearchType extends AbstractType
                     '€-€€' => '€-€€',
                     '€€-€€€' => '€€-€€€',
                     '€€€' => '€€€',
+                ]
+            ])
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class)
+            ->add('address', null,[
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('distance', ChoiceType::class,[
+                'label' => false,
+                'required' => false,
+                'choices'=> [
+                    '10Km' => 10,
+                    '30Km' => 30,
+                    '50Km' => 50,
+                    '100Km' => 100
                 ]
             ])
         ;
