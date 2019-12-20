@@ -34,6 +34,8 @@ class RestaurantType extends AbstractType
             ->add('city')
             ->add('address')
             ->add('postal_code')
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class)
             ->add('site')
             ->add('caracteristics', EntityType::class, [
                 'class' => Caracteristic::class,
