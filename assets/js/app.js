@@ -50,6 +50,13 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
 
+let $contactButton = $('#contactButton');
+$contactButton.click(e => {
+    e.preventDefault();
+    $('#contactForm').slideDown();
+    $contactButton.slideUp();
+});
+
 $('[data-slider]').slick({
     dots: true,
     arrows: true
