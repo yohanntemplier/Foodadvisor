@@ -4,6 +4,11 @@
 {% block body %}
     <div class="jumbotron">
         <div class="container">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
             <div class="row">
                 <div class="col-md-6">
                     <div data-slider>
@@ -21,6 +26,41 @@
                     <h3><i class="fas fa-envelope"></i> {{ restaurant.address }} {{ restaurant.postalcode }} {{restaurant.city}}</h3>
                     <h4><i class="fas fa-phone mr-3"></i> {{ restaurant.phone }}</h4>
                     <h4><i class="fas fa-user-clock"></i> {{ restaurant.openingTime }}</h4>
+                    <h4> Avis : {{ comments|length }}</h4>
+                    <h4> Note moyenne : {{ moyenne }}</h4>
+                    <div class="row">
+                        <div class="col">
+                        <a href="#" class="btn btn-primary" id="contactButton" {% if form.vars.submitted %} style="display: none;"
+                                {% endif %}>Laisser un Commentaire</a>
+                            <div id="contactForm" class="mt-4" {% if not form.vars.submitted %} style="display: none;" {% endif %}>
+                                {{ form_start(form) }}
+                                <div class="row">
+                                    <div class="col">
+                                        <strong>Votre Pseudo :</strong>
+                                        {{ form_row(form.pseudo) }}
+                                    </div>
+                                    <div class="col">
+                                        <strong>Votre note :</strong>
+                                        {{ form_row(form.note) }}
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-3">
+                                    <div class ="col">
+                                        <strong>Votre Commentaire :</strong>
+                                        {{ form_row(form.message) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary text-center">Envoyer</button>
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <a href="{{ path('restaurant_comment',{id: restaurant.id}) }}" class="btn btn-primary">Voir les Commentaires</a></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

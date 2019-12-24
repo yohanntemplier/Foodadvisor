@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Restaurant comment{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class ="review-title mb-5 mt-4">
+        <h1 class="text-center text">Commentaires clients</h1>
+    </div>
+    <div class="row justify-content-around">
+        {% for comment in comments %}
+            <div class="card border-secondary mb-5" style="max-width: 18rem;">
+                <div class="card-header bg-secondary border-secondary"><strong>Pseudo: </strong>{{ comment.pseudo }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <div class="note text-center mb-4">
+                            {% for i in 1..comment.note %}
+                            <i class="fas fa-star" style="color:#EFD807;"></i>
+                            {% endfor %}
+                        </div>
+                    </h5>
+                    <div class="card-text">
+                        <strong>Commentaire : </strong>{{ comment.message }}
+                    </div>
+                </div>
+                <div class="card-footer border-secondary bg-secondary"><strong>Date de publication :</strong> {{ comment.date|date('d-m-Y') }}</div>
+            </div>
+        {% else %}
+            <p>Il n'y a pas encore de commentaire, publiez le premier !</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
