@@ -22,23 +22,19 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return QueryBuilder
+     * @return array
      */
-    public function noteMoyenneQuery(): Query
+    public function noteMoyenneQuery(): array
     {
-
         $query = $this->restaurantCommentsQuery();
-
         $query->select('AVG(c.note) AS moyenne')
             ->where('c.isActive = true');
-
-        return $query->getQuery();
+        return $query->getQuery()->getSingleResult();
     }
-
     private function restaurantCommentsQuery(): QueryBuilder
     {
         return $this->createQueryBuilder('c')
-            ->groupBy('c.restaurant');
+            ->groupBy('c.restaurants');
     }
 }
     // /**
