@@ -71,3 +71,4 @@ class RestaurantRepository extends ServiceEntityRepository
     }
 
 }
+

@@ -87,19 +87,20 @@ h1{
     width: 20%;
 }
 .admin{
-    background-color: #0d88c1;
+    background-color: #fffbcc;
 }
 /**fin de navbarAdmin**/
 
 /**admin**/
 .jumbotron-admin {
-    background-image: url("../images/theme-restaurant.jpg");
+    background-image: url("../images/accueil.jpg");
     background-size: cover;
     width: 100%;
     height: 100vh;
 }
 .adminIndex {
     font-family: 'Courgette', cursive;
+    padding-top: 5em;
 }
 
 /**fin admin**/

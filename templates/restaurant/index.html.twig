@@ -45,10 +45,13 @@
                     {% else %}
                         <img src="{{'/images/restaurants/empty.jpg' }}" alt="card-img-top" style="width:100%; height: auto;">
                     {% endif %}
-                    <h3 class="text text-center"><a href="{{ path('restaurant_show',{slug: restaurant.slug, id: restaurant.id}) }}">
+                    <h3 class="text-center pt-2">{% for i in 1.. moyenne["moyenne"] %}
+                            <i class="fas fa-utensil-spoon" style="color:#EFD807;"></i>
+                        {% endfor %}</h3>
+                    <h3 class="text text-center pt-3"><a href="{{ path('restaurant_show',{slug: restaurant.slug, id: restaurant.id}) }}">
                         {{ restaurant.name }}</a>
                     </h3>
-                    <h5 class="text-center">{{ restaurant.city }} ({{ restaurant.postalcode }})</h5>
+                    <h5 class="text-center pt-2">{{ restaurant.city }} ({{ restaurant.postalcode }})</h5>
                 </div>
             </div>
         {% endfor %}
