@@ -38,9 +38,9 @@ class RestaurantSearchType extends AbstractType
                 'required' => false,
                 'choices'=>[
                     '€' => '€',
-                    '€-€€' => '€-€€',
-                    '€€-€€€' => '€€-€€€',
+                    '€€' => '€€',
                     '€€€' => '€€€',
+                    '€€€€' => '€€€€',
                 ]
             ])
             ->add('lat', HiddenType::class)
@@ -53,10 +53,10 @@ class RestaurantSearchType extends AbstractType
                 'label' => false,
                 'required' => false,
                 'choices'=> [
+                    '5Km' => 5,
                     '10Km' => 10,
-                    '30Km' => 30,
-                    '50Km' => 50,
-                    '100Km' => 100
+                    '15Km' => 15,
+                    '20Km' => 20
                 ]
             ])
         ;

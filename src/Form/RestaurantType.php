@@ -54,9 +54,9 @@ class RestaurantType extends AbstractType
             ->add('cost', ChoiceType::class,[
                 'choices'=>[
                     '€' => '€',
-                    '€-€€' => '€-€€',
-                    '€€-€€€' => '€€-€€€',
+                    '€€' => '€€',
                     '€€€' => '€€€',
+                    '€€€€' => '€€€€',
                 ]
             ])
             ->add('phone')

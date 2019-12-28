@@ -5,7 +5,7 @@
 {% block body %}
 <div class="container">
     <div class ="review-title mb-5 mt-4">
-        <h1 class="text-center text">Commentaires clients</h1>
+        <h1 class="text-center text">Commentaires clients pour {{ restaurant.name }} </h1>
     </div>
     <div class="row justify-content-around">
         {% for comment in comments %}
@@ -15,7 +15,7 @@
                     <h5 class="card-title">
                         <div class="note text-center mb-4">
                             {% for i in 1..comment.note %}
-                            <i class="fas fa-star" style="color:#EFD807;"></i>
+                            <i class="fas fa-utensil-spoon" style="color:#EFD807;"></i>
                             {% endfor %}
                         </div>
                     </h5>

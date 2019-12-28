@@ -26,17 +26,18 @@ class RestaurantController extends AbstractController
     /**
      * @Route("/", name="restaurant_index", methods={"GET"})
      */
-    public function index(RestaurantRepository $restaurantRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(RestaurantRepository $restaurantRepository,CommentRepository $commentRepository ,PaginatorInterface $paginator, Request $request): Response
     {
         $search = new RestaurantSearch();
         $form = $this->createForm(RestaurantSearchType::class, $search);
         $form->handleRequest($request);
-
+        $moyenne = $commentRepository->noteMoyenneQuery();
         $restaurant = $restaurantRepository->findAllRestaurantsQuery($search);
         $restaurants = $paginator->paginate($restaurant, $request->query->getInt('page', 1), /*page number*/
             6 /*limit per page*/);
         return $this->render('restaurant/index.html.twig', [
             'restaurants'=> $restaurants,
+            'moyenne' => $moyenne,
             'form' => $form->createView(),
         ]);
     }
@@ -72,9 +73,6 @@ class RestaurantController extends AbstractController
                     'slug' => $restaurant->getSlug()
                 ]);
         }
-
-
-
         return $this->render('restaurant/show.html.twig', [
             'restaurant' => $restaurant,
             'comments' => $comments,
@@ -86,19 +84,41 @@ class RestaurantController extends AbstractController
     /**
      * @Route("/{id}/comment", name="restaurant_comment",methods={"GET","POST"})
      */
-    public function Comment(Restaurant $restaurant): Response
+    public function Comment(Restaurant $restaurant, CommentRepository $commentRepository): Response
     {
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([
             'restaurants' => $restaurant,
             'isActive' => 1
         ],['date' => 'desc'
         ]);
-
+        $moyenne = $commentRepository->noteMoyenneQuery();
         return $this->render('restaurant/comment.html.twig', [
             'restaurant' => $restaurant,
             'comments' => $comments,
+            'moyenne' => $moyenne,
 
         ]);
 
     }
+
+    /**
+     * @Route("/favoris", name="restaurant_favoris",methods={"GET","POST"})
+     */
+    public function Favorite(RestaurantRepository $restaurantRepository,CommentRepository $commentRepository,PaginatorInterface $paginator,Request $request): Response
+    {
+        $moyenne = $commentRepository->noteMoyenneQuery();
+        $favoris = asort($moyenne);
+        $restaurant = $restaurantRepository->findAll();
+        $restaurants = $paginator->paginate($restaurant, $request->query->getInt('page', 1), /*page number*/
+            6 /*limit per page*/);
+
+        return $this->render('restaurant/favoris.html.twig', [
+            'moyenne' => $moyenne,
+            'restaurants' => $restaurants,
+            'favoris' => $favoris,
+
+        ]);
+
+    }
+
 }

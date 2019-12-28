@@ -31,11 +31,13 @@ class CommentRepository extends ServiceEntityRepository
             ->where('c.isActive = true');
         return $query->getQuery()->getSingleResult();
     }
+
     private function restaurantCommentsQuery(): QueryBuilder
     {
         return $this->createQueryBuilder('c')
             ->groupBy('c.restaurants');
     }
+
 }
     // /**
     //  * @return Comment[] Returns an array of Comment objects
