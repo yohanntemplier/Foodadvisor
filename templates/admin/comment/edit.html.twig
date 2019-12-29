@@ -1,0 +1,10 @@
+{% extends 'layoutAdmin.html.twig' %}
+
+{% block title %}Edit Comment{% endblock %}
+
+{% block body %}
+    <h1 class="text text-center pt-3">Mettre en ligne le commentaire</h1>
+
+    {{ include('admin/comment/_form.html.twig', {'button_label': 'modifier'}) }}
+
+{% endblock %}

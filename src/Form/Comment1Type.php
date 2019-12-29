@@ -3,35 +3,22 @@
 namespace App\Form;
 
 use App\Entity\Comment;
+use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CommentType extends AbstractType
+class Comment1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pseudo', TextType::class, [
-                'label' => false,
-                'required' => false,
-            ])
-            ->add('message', TextareaType::class, [
-                'label' => false,
-                'required' => false,
-            ])
-            ->add('note', ChoiceType::class, [
-                'choices'=>['1'=>'1', '2'=>'2', '3'=>'3', '4'=> '4', '5'=> '5'],
-                'expanded' => false,
-                'multiple'=> false,
-                'required'=> false,
-                'label' => false,
-                'label_attr'=>[
-                    'class'=>'radio-inline'
-                ]
+            ->add('isActive',CheckboxType::class, [
+                'label'    => 'mettre le commentaire en ligne',
             ])
         ;
     }

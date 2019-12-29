@@ -6,6 +6,8 @@ use App\Entity\Comment;
 use App\Entity\Restaurant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
@@ -22,27 +24,35 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    public function findAverageOfAllActiveReviewsForOneRestaurant(Restaurant $restaurant)
+    /**
+     * @param Restaurant $restaurant
+     * @return float|null
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function findAverageOfAllActiveReviewsForOneRestaurant(Restaurant $restaurant) : ?float
     {
-       $q = $this->createQueryBuilder('c')
+        return $this->createQueryBuilder('c')
             ->select('AVG(c.note) AS moyenne')
             ->andWhere('c.restaurants = :restaurant')
             ->andWhere('c.isActive = true')
-            ->setParameter('restaurant', $restaurant);
-       $q->getQuery()->getSingleScalarResult();
+            ->setParameter('restaurant', $restaurant)
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
     }
 
-  //
-  //  /**
-  //   * @return array
-   //  */
- //   public function noteMoyenneQuery(): array
- //   {
-    //    $query = $this->restaurantCommentsQuery();
-    //    $query->select('AVG(c.note) AS moyenne')
-    //        ->where('c.isActive = true');
-     //   return $query->getQuery()->getSingleResult();
- //   }
+
+    /**
+     * @return array
+     */
+    public function noteMoyenneQuery(): array
+    {
+        $query = $this->restaurantCommentsQuery();
+        $query->select('AVG(c.note) AS moyenne')
+            ->where('c.isActive = true');
+        return $query->getQuery()->getSingleResult();
+    }
 
     private function restaurantCommentsQuery(): QueryBuilder
     {
@@ -51,31 +61,3 @@ class CommentRepository extends ServiceEntityRepository
     }
 
 }
-    // /**
-    //  * @return Comment[] Returns an array of Comment objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Comment
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */

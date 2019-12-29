@@ -25,19 +25,28 @@ class RestaurantController extends AbstractController
 
     /**
      * @Route("/", name="restaurant_index", methods={"GET"})
+     * @param RestaurantRepository $restaurantRepository
+     * @param CommentRepository $commentRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
      */
-    public function index(RestaurantRepository $restaurantRepository,CommentRepository $commentRepository ,PaginatorInterface $paginator, Request $request): Response
+    public function index(RestaurantRepository $restaurantRepository,CommentRepository $commentRepository,PaginatorInterface $paginator, Request $request): Response
     {
         $search = new RestaurantSearch();
-        $moyenne = $commentRepository->noteMoyenneQuery();
         $form = $this->createForm(RestaurantSearchType::class, $search);
         $form->handleRequest($request);
         $restaurant = $restaurantRepository->findAllRestaurantsQuery($search);
-        $restaurants = $paginator->paginate($restaurant, $request->query->getInt('page', 1), /*page number*/
-            6 /*limit per page*/);
+        $restaurants = [];
+        foreach ($restaurant as $key => $resto)
+        {
+            $restaurants[$key]["averageScore"] = $commentRepository->findAverageOfAllActiveReviewsForOneRestaurant($resto);
+            $restaurants[$key]["restaurant"] = $resto;
+        }        $restaurantsPaginated = $paginator->paginate($restaurants, $request->query->getInt('page', 1), /*page number*/
+        6 /*limit per page*/);
         return $this->render('restaurant/index.html.twig', [
-            'restaurants'=> $restaurants,
-            'moyenne' => $moyenne,
+            'restaurants'=> $restaurantsPaginated,
+            'moyenne' => $restaurants[$key]["averageScore"],
             'form' => $form->createView(),
         ]);
     }
@@ -91,7 +100,7 @@ class RestaurantController extends AbstractController
             'isActive' => 1
         ],['date' => 'desc'
         ]);
-        $moyenne = $commentRepository->noteMoyenneQuery();
+        $moyenne = $commentRepository->findAverageOfAllActiveReviewsForOneRestaurant($restaurant);
         return $this->render('restaurant/comment.html.twig', [
             'restaurant' => $restaurant,
             'comments' => $comments,
@@ -106,19 +115,24 @@ class RestaurantController extends AbstractController
      */
     public function Favorite(RestaurantRepository $restaurantRepository,CommentRepository $commentRepository,PaginatorInterface $paginator,Request $request): Response
     {
-        $moyenne = $commentRepository->noteMoyenneQuery();
-        $favoris = asort($moyenne);
         $restaurant = $restaurantRepository->findAll();
-        $restaurants = $paginator->paginate($restaurant, $request->query->getInt('page', 1), /*page number*/
-            6 /*limit per page*/);
+        $restaurants = [];
+        foreach ($restaurant as $key => $resto)
+        {
+            $restaurants[$key]["averageScore"] = $commentRepository->findAverageOfAllActiveReviewsForOneRestaurant($resto);
+            $restaurants[$key]["restaurant"] = $resto;
+        }
+        $restaurantsPaginated = $paginator->paginate($restaurants, $request->query->getInt('page', 1), /*page number*/
+        6 /*limit per page*/);
+        $favoris = asort($restaurants[$key]["averageScore"]);
+
 
         return $this->render('restaurant/favoris.html.twig', [
-            'moyenne' => $moyenne,
-            'restaurants' => $restaurants,
+            'moyenne' => $restaurants[$key]["averageScore"],
+            'restaurants' => $restaurantsPaginated,
             'favoris' => $favoris,
-
         ]);
-
     }
+
 
 }
