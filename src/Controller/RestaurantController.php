@@ -29,9 +29,9 @@ class RestaurantController extends AbstractController
     public function index(RestaurantRepository $restaurantRepository,CommentRepository $commentRepository ,PaginatorInterface $paginator, Request $request): Response
     {
         $search = new RestaurantSearch();
+        $moyenne = $commentRepository->noteMoyenneQuery();
         $form = $this->createForm(RestaurantSearchType::class, $search);
         $form->handleRequest($request);
-        $moyenne = $commentRepository->noteMoyenneQuery();
         $restaurant = $restaurantRepository->findAllRestaurantsQuery($search);
         $restaurants = $paginator->paginate($restaurant, $request->query->getInt('page', 1), /*page number*/
             6 /*limit per page*/);
@@ -57,7 +57,7 @@ class RestaurantController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-        $moyenne = $commentRepository->noteMoyenneQuery();
+        $moyenne = $commentRepository->findAverageOfAllActiveReviewsForOneRestaurant($restaurant);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setRestaurants($restaurant);
