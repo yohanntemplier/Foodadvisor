@@ -17,8 +17,8 @@ h1{
 
 .nav-link2{
     font-family: 'Courgette', cursive;
-    font-size: 20px;
-    margin-left: 40px;
+    font-size: 30px;
+    margin-left: 65px;
     color: black;
     &:hover {
         color: red;
@@ -77,6 +77,32 @@ h1{
     }
 }
 .nav-link6.active-link{
+    color: red;
+}
+
+.nav-link7{
+    font-family: 'Courgette', cursive;
+    font-size: 30px;
+    margin-left: 65px;
+    color: black;
+    &:hover {
+        color: red;
+    }
+}
+.nav-link7.active-link{
+    color: red;
+}
+
+.nav-link8{
+    font-family: 'Courgette', cursive;
+    font-size: 30px;
+    margin-left: 65px;
+    color: black;
+    &:hover {
+        color: red;
+    }
+}
+.nav-link8.active-link{
     color: red;
 }
 

@@ -18,7 +18,7 @@
                     <a class="nav-link6 {{ app.request.attributes.get('_route') == 'admin_paiement_index' ? 'active-link' }}" href="{{ path('admin_paiement_index')}}">Moyens de paiement</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link4" href="#">Commentaires</a>
+                    <a class="nav-link4 {{ app.request.attributes.get('_route') == 'admin_comment_index' ? 'active-link' }}" href="{{ path('admin_comment_index')}}">Commentaires</a>
                 </li>
             </ul>
             <div class="form-inline my-2 my-lg-0">

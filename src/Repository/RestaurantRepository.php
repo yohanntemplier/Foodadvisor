@@ -24,9 +24,10 @@ class RestaurantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Query
+     * @param RestaurantSearch $search
+     * @return array
      */
-    public function findAllRestaurantsQuery(RestaurantSearch $search): Query
+    public function findAllRestaurantsQuery(RestaurantSearch $search): Array
     {
         $query = $this->findRestaurantsQuery();
 
@@ -61,7 +62,7 @@ class RestaurantRepository extends ServiceEntityRepository
                 ->setParameter('distance', $search->getDistance());
         }
 
-        return $query->getQuery();
+        return $query->getQuery()->getResult();
     }
 
     private function findRestaurantsQuery(): QueryBuilder
