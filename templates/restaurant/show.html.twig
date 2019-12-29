@@ -27,9 +27,9 @@
                     <h4><i class="fas fa-phone mr-3"></i> 0{{ restaurant.phone }}</h4>
                     <h4><i class="fas fa-user-clock"></i> {{ restaurant.openingTime }}</h4>
                     <h4> Avis : <a href="{{ path('restaurant_comment',{id: restaurant.id}) }}" class="avis" style="color:blue;">({{ comments|length }})</a></h4>
-                    <h4> Note moyenne : {% for i in 1.. moyenne["moyenne"] %}
-                            <i class="fas fa-utensil-spoon" style="color:#EFD807;"></i>
-                        {% endfor %}</h4>
+                    <h4> Note moyenne :
+                            {{moyenne["moyenne"]}}
+                    </h4>
                     <div class="row">
                         <div class="col">
                         <a href="#" class="btn btn-primary" id="contactButton" {% if form.vars.submitted %} style="display: none;"

@@ -70,5 +70,18 @@ class RestaurantRepository extends ServiceEntityRepository
             ->orderBy('r.name', 'ASC');
     }
 
+    public function findLatest(): array
+    {
+        return $this->findRestaurantIDQuery()
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function findRestaurantIDQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.id', 'DESC');
+    }
 }
 

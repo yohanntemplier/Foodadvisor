@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\Restaurant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;
@@ -21,16 +22,27 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    /**
-     * @return array
-     */
-    public function noteMoyenneQuery(): array
+    public function findAverageOfAllActiveReviewsForOneRestaurant(Restaurant $restaurant)
     {
-        $query = $this->restaurantCommentsQuery();
-        $query->select('AVG(c.note) AS moyenne')
-            ->where('c.isActive = true');
-        return $query->getQuery()->getSingleResult();
+       $q = $this->createQueryBuilder('c')
+            ->select('AVG(c.note) AS moyenne')
+            ->andWhere('c.restaurants = :restaurant')
+            ->andWhere('c.isActive = true')
+            ->setParameter('restaurant', $restaurant);
+       $q->getQuery()->getSingleScalarResult();
     }
+
+  //
+  //  /**
+  //   * @return array
+   //  */
+ //   public function noteMoyenneQuery(): array
+ //   {
+    //    $query = $this->restaurantCommentsQuery();
+    //    $query->select('AVG(c.note) AS moyenne')
+    //        ->where('c.isActive = true');
+     //   return $query->getQuery()->getSingleResult();
+ //   }
 
     private function restaurantCommentsQuery(): QueryBuilder
     {
