@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Restaurant;
 use App\Form\RestaurantType;
 use App\Repository\RestaurantRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,10 +32,13 @@ class AdminController extends AbstractController
     /**
      * @Route("/restaurant", name="admin_restaurant_index", methods={"GET"})
      */
-    public function index(RestaurantRepository $restaurantRepository): Response
+    public function index(RestaurantRepository $restaurantRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $restaurant = $restaurantRepository->RestaurantPerName();
+        $restaurants = $paginator->paginate($restaurant, $request->query->getInt('page', 1), /*page number*/
+            6 /*limit per page*/);
         return $this->render('admin/restaurant/index.html.twig', [
-            'restaurants' => $restaurantRepository->findAll(),
+            'restaurants' => $restaurants,
         ]);
     }
 

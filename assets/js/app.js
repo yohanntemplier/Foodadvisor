@@ -71,6 +71,7 @@ document.querySelectorAll('[data-delete]').forEach(a => {
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
                 'Content-Type': 'application/json'
+
             },
             body: JSON.stringify({'_token': a.dataset.token})
         }).then(response => response.json())

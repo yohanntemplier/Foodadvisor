@@ -46,7 +46,7 @@ class RestaurantController extends AbstractController
         6 /*limit per page*/);
         return $this->render('restaurant/index.html.twig', [
             'restaurants'=> $restaurantsPaginated,
-            'moyenne' => $restaurants[$key]["averageScore"],
+            'average' => $restaurants[$key]["averageScore"],
             'form' => $form->createView(),
         ]);
     }
@@ -66,7 +66,7 @@ class RestaurantController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-        $moyenne = $commentRepository->findAverageOfAllActiveReviewsForOneRestaurant($restaurant);
+        $average = $commentRepository->findAverageOfAllActiveReviewsForOneRestaurant($restaurant);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setRestaurants($restaurant);
@@ -85,7 +85,7 @@ class RestaurantController extends AbstractController
         return $this->render('restaurant/show.html.twig', [
             'restaurant' => $restaurant,
             'comments' => $comments,
-            'moyenne' => $moyenne,
+            'average' => $average,
             'form' => $form->createView(),
         ]);
     }
@@ -100,11 +100,11 @@ class RestaurantController extends AbstractController
             'isActive' => 1
         ],['date' => 'desc'
         ]);
-        $moyenne = $commentRepository->findAverageOfAllActiveReviewsForOneRestaurant($restaurant);
+        $average = $commentRepository->findAverageOfAllActiveReviewsForOneRestaurant($restaurant);
         return $this->render('restaurant/comment.html.twig', [
             'restaurant' => $restaurant,
             'comments' => $comments,
-            'moyenne' => $moyenne,
+            'average' => $average,
 
         ]);
 
@@ -122,16 +122,23 @@ class RestaurantController extends AbstractController
             $restaurants[$key]["averageScore"] = $commentRepository->findAverageOfAllActiveReviewsForOneRestaurant($resto);
             $restaurants[$key]["restaurant"] = $resto;
         }
+        usort($restaurants, ['App\Controller\RestaurantController', 'sortDependingAverageReviewScore']);
         $restaurantsPaginated = $paginator->paginate($restaurants, $request->query->getInt('page', 1), /*page number*/
         6 /*limit per page*/);
-        $favoris = asort($restaurants[$key]["averageScore"]);
 
 
         return $this->render('restaurant/favoris.html.twig', [
-            'moyenne' => $restaurants[$key]["averageScore"],
+            'average' => $restaurants[$key]["averageScore"],
             'restaurants' => $restaurantsPaginated,
-            'favoris' => $favoris,
         ]);
+    }
+
+    private function sortDependingAverageReviewScore($actualIndex, $beforeIndex)
+    {
+        if ($actualIndex['averageScore'] == $beforeIndex['averageScore']) {
+            return 0;
+        }
+        return ($actualIndex['averageScore'] > $beforeIndex['averageScore']) ? -1 : 1;
     }
 
 

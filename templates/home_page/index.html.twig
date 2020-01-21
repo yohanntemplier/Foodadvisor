@@ -5,8 +5,9 @@
 {% block body %}
 <div class="jumbotron-accueil">
     <div class="container">
+        <div class="accueil">
         <div class="about text">
-            <h2 class="title text mb-4">A propos de Foodadvisor</h2>
+            <h2 class="title text">A propos de Foodadvisor</h2>
             <div class="card description mb-4 pt-2 pb-2">
                 <P>Si vous recherchez un restaurant proche de chez vous pour vous faire plaisir ou faire plaisir à vos proches,
                     Foodavisor est fait pour vous.
@@ -20,10 +21,10 @@
             </div>
         </div>
         <div class="restaurant text text-center justify-content-center">
-            <h2 class="title text text-center mb-4">Les derniers restaurants ajoutés</h2>
+            <h2 class="title text text-center">Les derniers restaurants ajoutés</h2>
             <div class="row">
                 {% for restaurant in restaurants %}
-                    <div class="col-md-3">
+                    <div class="col-md-3 pb-5 mt-4 mb-4">
                         <div class="card mb-2">
                             {% if restaurant.picture %}
                                 <img src="{{ vich_uploader_asset(restaurant.picture,'imageFile') }}" alt="card-img-top" style="width: 100%; height: auto;">
@@ -39,9 +40,6 @@
                 {% endfor %}
             </div>
         </div>
-
-        <div class="favoris text text-center">
-            <h2 class="title text pb-4">Les restaurants les mieux notés</h2>
         </div>
     </div>
 </div>

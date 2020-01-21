@@ -65,10 +65,12 @@ class RestaurantRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    private function findRestaurantsQuery(): QueryBuilder
+    public function RestaurantPerName()
     {
-        return $this->createQueryBuilder('r')
+        $builder = $this->createQueryBuilder('r')
             ->orderBy('r.name', 'ASC');
+
+        return $builder->getQuery()->getResult();
     }
 
     public function findLatest(): array
@@ -77,6 +79,12 @@ class RestaurantRepository extends ServiceEntityRepository
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
+    }
+
+    private function findRestaurantsQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.name', 'ASC');
     }
 
     private function findRestaurantIDQuery(): QueryBuilder

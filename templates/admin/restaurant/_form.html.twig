@@ -65,7 +65,8 @@
             {% for picture in restaurant.pictures %}
                 <div class="col-md-3" style="width: 100px; flex: none; margin: 20px">
                     <img src="{{ vich_uploader_asset(picture, 'imageFile') }}" width="100" alt="">
-                    <a href="{{ path('admin_picture_delete', {'id': picture.id}) }}" class="btn btn-danger" data-delete data-token="{{ csrf_token('delete' ~ picture.id) }}">Supprimer</a>
+                    <a href="{{ path('admin_picture_delete', {id: picture.id}) }}" class="btn btn-danger"
+                       data-delete data-token="{{ csrf_token('delete' ~ picture.id) }}">Supprimer</a>
                 </div>
             {% endfor %}
             </div>

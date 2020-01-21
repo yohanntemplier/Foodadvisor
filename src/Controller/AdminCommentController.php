@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Form\Comment1Type;
 use App\Repository\CommentRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,37 @@ class AdminCommentController extends AbstractController
     /**
      * @Route("/", name="admin_comment_index", methods={"GET"})
      */
-    public function index(CommentRepository $commentRepository): Response
+    public function index(CommentRepository $commentRepository,PaginatorInterface $paginator, Request $request): Response
     {
+        $comment = $commentRepository->findAll();
         return $this->render('admin/comment/index.html.twig', [
-            'comments' => $commentRepository->findAll(),
+            'comments' => $comment,
+        ]);
+    }
+
+    /**
+     * @Route("/active", name="admin_comment_active", methods={"GET"})
+     */
+    public function active(CommentRepository $commentRepository,PaginatorInterface $paginator, Request $request): Response
+    {
+        $comment = $commentRepository->findActiveComment();
+        $comments = $paginator->paginate($comment, $request->query->getInt('page', 1), /*page number*/
+            6 /*limit per page*/);
+        return $this->render('admin/comment/active.html.twig', [
+            'comments' => $comments,
+        ]);
+    }
+
+    /**
+     * @Route("/notActive", name="admin_comment_notActive", methods={"GET"})
+     */
+    public function notActive(CommentRepository $commentRepository,PaginatorInterface $paginator, Request $request): Response
+    {
+        $comment = $commentRepository->findNotActiveComment();
+        $comments = $paginator->paginate($comment, $request->query->getInt('page', 1), /*page number*/
+            6 /*limit per page*/);
+        return $this->render('admin/comment/notActive.html.twig', [
+            'comments' => $comments,
         ]);
     }
 

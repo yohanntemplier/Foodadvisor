@@ -12,7 +12,7 @@
                     <a class="nav-link2 {{ app.request.attributes.get('_route') == 'restaurant_index' ? 'active-link' }}" href="{{ path('restaurant_index')}}">Restaurants</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link7" href="#">Favoris</a>
+                    <a class="nav-link7 {{ app.request.attributes.get('_route') == 'restaurant_favoris' ? 'active-link' }}" href="{{ path('restaurant_favoris')}}">Favoris</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link8 {{ app.request.attributes.get('_route') == 'contact' ? 'active-link' }}" href="{{ path('contact')}}">Contact/Suggestions</a>

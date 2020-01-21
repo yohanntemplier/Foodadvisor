@@ -42,22 +42,21 @@ class CommentRepository extends ServiceEntityRepository
             ;
     }
 
-
-    /**
-     * @return array
-     */
-    public function noteMoyenneQuery(): array
+    public function findActiveComment()
     {
-        $query = $this->restaurantCommentsQuery();
-        $query->select('AVG(c.note) AS moyenne')
-            ->where('c.isActive = true');
-        return $query->getQuery()->getSingleResult();
+        $builder = $this->createQueryBuilder('c')
+            ->orderBy('c.date', 'DESC')
+            ->andWhere('c.isActive = true');
+
+        return $builder->getQuery()->getResult();
     }
 
-    private function restaurantCommentsQuery(): QueryBuilder
+    public function findNotActiveComment()
     {
-        return $this->createQueryBuilder('c')
-            ->groupBy('c.restaurants');
-    }
+        $builder = $this->createQueryBuilder('c')
+            ->orderBy('c.date', 'DESC')
+            ->andWhere('c.isActive = false');
 
+        return $builder->getQuery()->getResult();
+    }
 }

@@ -10,7 +10,7 @@
                 </div>
             {% endfor %}
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5 mr-5">
                     <div data-slider>
                         {% if restaurant.pictures is empty %}
                             <img src="{{'/images/restaurants/empty.jpg' }}" alt="card-img-top" style="width:100%; height: auto;">
@@ -21,14 +21,19 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-md-5">
-                    <h1>{{restaurant.name}}</h1>
-                    <h3><i class="fas fa-envelope"></i> {{ restaurant.address }} {{ restaurant.postalcode }} {{restaurant.city}}</h3>
-                    <h4><i class="fas fa-phone mr-3"></i> 0{{ restaurant.phone }}</h4>
-                    <h4><i class="fas fa-user-clock"></i> {{ restaurant.openingTime }}</h4>
-                    <h4> Note moyenne : {% for i in 1..moyenne %}
-                            <i class="fas fa-utensil-spoon" style="color:#EFD807;"></i>
-                        {% endfor %} <a href="{{ path('restaurant_comment',{id: restaurant.id}) }}" class="avis" style="color:blue;">({{ comments|length }})</a> avis.
+                <div class="col-md-6">
+                    <h1><div id="name">{{restaurant.name}}</div>{{ restaurant.name }}</h1>
+                    <h3><i class="fas fa-envelope mr-3"></i> {{ restaurant.address }} {{ restaurant.postalcode }}</h3>
+                    <h4><i class="fas fa-phone mr-3"></i>  0{{ restaurant.phone }}</h4>
+                    <h4><i class="fas fa-user-clock mr-3"></i> {{ restaurant.openingTime }}</h4>
+                    <h4> Note moyenne : {% if (average) is not null %}
+                            {% for i in 1.. average %}
+                                <i class="fas fa-utensil-spoon" style="color:#EFD807;"></i>
+                            {% endfor %}
+                        {% else %}
+                            <i class="fas fa-meh" style="color:#EFD807;"></i>
+                        {% endif %}
+                        <a href="{{ path('restaurant_comment',{id: restaurant.id}) }}" class="avis" style="color:blue;">({{ comments|length }})</a> avis.
                     </h4>
                     <div class="row">
                         <div class="col">
