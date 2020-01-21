@@ -1,0 +1,20 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+<div class="container form p-4">
+    {{ form_start(form) }}
+    <div class="row justify-content-center">
+        <div class="col-md-6 mt-4 mb-4">
+            {{ form_label(form.isActive, 'Mettre le commentaire en ligne') }}
+            {{ form_widget(form.isActive) }}
+        </div>
+    </div>
+
+    <div class="form-row justify-content-center text-center m-2">
+        <button type="submit" class="btn btn-primary btn-lg">
+            {{ button_label|default('sauvegarder') }}
+        </button>
+    </div>
+    <a href="{{ path('admin_comment_index') }}" class="btn-return btn-primary btn-lg">
+        Retour à la liste des commentaires
+    </a>
+    {{ form_end(form) }}
+</div>

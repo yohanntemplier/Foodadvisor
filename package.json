@@ -18,5 +18,11 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "leaflet": "^1.6.0",
+        "places.js": "^1.17.1",
+        "select2": "^4.0.12",
+        "slick-carousel": "^1.8.1"
     }
 }

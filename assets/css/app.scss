@@ -17,8 +17,8 @@ h1{
 
 .nav-link2{
     font-family: 'Courgette', cursive;
-    font-size: 35px;
-    margin-left: 40px;
+    font-size: 30px;
+    margin-left: 65px;
     color: black;
     &:hover {
         color: red;
@@ -30,7 +30,7 @@ h1{
 
 .nav-link3{
     font-family: 'Courgette', cursive;
-    font-size: 35px;
+    font-size: 20px;
     margin-left: 40px;
     color: black;
     &:hover {
@@ -43,7 +43,7 @@ h1{
 
 .nav-link4{
     font-family: 'Courgette', cursive;
-    font-size: 35px;
+    font-size: 20px;
     margin-left: 40px;
     color: black;
     &:hover {
@@ -53,6 +53,59 @@ h1{
 .nav-link4.active-link{
     color: red;
 }
+
+.nav-link5{
+    font-family: 'Courgette', cursive;
+    font-size: 20px;
+    margin-left: 40px;
+    color: black;
+    &:hover {
+        color: red;
+    }
+}
+.nav-link5.active-link{
+    color: red;
+}
+
+.nav-link6{
+    font-family: 'Courgette', cursive;
+    font-size: 20px;
+    margin-left: 40px;
+    color: black;
+    &:hover {
+        color: red;
+    }
+}
+.nav-link6.active-link{
+    color: red;
+}
+
+.nav-link7{
+    font-family: 'Courgette', cursive;
+    font-size: 30px;
+    margin-left: 65px;
+    color: black;
+    &:hover {
+        color: red;
+    }
+}
+.nav-link7.active-link{
+    color: red;
+}
+
+.nav-link8{
+    font-family: 'Courgette', cursive;
+    font-size: 30px;
+    margin-left: 65px;
+    color: black;
+    &:hover {
+        color: red;
+    }
+}
+.nav-link8.active-link{
+    color: red;
+}
+
 .navbar-toggler{
     @include base-icon;
     background-image: url("../images/logof.png");
@@ -60,19 +113,20 @@ h1{
     width: 20%;
 }
 .admin{
-    background-color: #0d88c1;
+    background-color: #fffbcc;
 }
 /**fin de navbarAdmin**/
 
 /**admin**/
 .jumbotron-admin {
-    background-image: url("../images/theme-restaurant.jpg");
+    background-image: url("../images/accueil.jpg");
     background-size: cover;
     width: 100%;
     height: 100vh;
 }
 .adminIndex {
     font-family: 'Courgette', cursive;
+    padding-top: 5em;
 }
 
 /**fin admin**/
@@ -132,13 +186,23 @@ h1{
     margin-top: -2em;
     margin-bottom: -2em;
 }
+.accueil{
+    margin-bottom: -7em;
+}
 
 .homePage{
     background-color: #fffbcc;
 }
 .title{
     color: #0a0a0a;
+    margin-top: 3em;
+    margin-bottom: 2em;
 }
+.comment-online{
+    margin-bottom: 6em;
+    margin-top: 6em;
+}
+
 .description{
     border-radius: 3%;
 }

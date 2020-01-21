@@ -3,9 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Restaurant;
+use App\Entity\RestaurantSearch;
 use App\Form\SearchRestaurantType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Restaurant|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,36 +23,74 @@ class RestaurantRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurant::class);
     }
 
-    public function findRestaurants($data)
+    /**
+     * @param RestaurantSearch $search
+     * @return array
+     */
+    public function findAllRestaurantsQuery(RestaurantSearch $search): Array
     {
+        $query = $this->findRestaurantsQuery();
 
-        $builder = $this->createQueryBuilder('r')
-            ->orWhere('r.name LIKE :input')
-            ->setParameter('input', '%' . $data[SearchRestaurantType::NAME] . '%')
-            ->orderBy('r.name', 'ASC');
-
-
-        if (!empty($data[SearchRestaurantType::TYPE])) {
-            $builder
-                ->andWhere('r.type = :type')
-                ->orderBy('r.name', 'ASC')
-                ->setParameter('type', $data[SearchRestaurantType::TYPE]);
+        if($search->getName()){
+            $query = $query
+                ->andWhere('r.name LIKE :name')
+                ->setParameter('name', '%' . $search->getName() . '%')
+                ->orderBy('r.name', 'ASC');
         }
+
+        if($search->getType()){
+            $query = $query
+                ->andWhere('r.type LIKE :type')
+                ->setParameter('type', '%' . $search->getType() . '%')
+                ->orderBy('r.name', 'ASC');
+        }
+
+        if($search->getCost()){
+            $query = $query
+                ->andWhere('r.cost LIKE :cost')
+                ->setParameter('cost', '%' . $search->getCost() . '%')
+                ->orderBy('r.name', 'ASC');
+        }
+
+        if($search->getLat() && $search->getLng() && $search->getDistance()) {
+            $query=$query
+                ->select('r')
+                ->andWhere('(6353 * 2 * ASIN(SQRT( POWER(SIN((r.lat - :lat) * pi()/180 / 2), 2) +COS(r.lat *      
+     pi()/180) * COS(:lat * pi()/180) * POWER(SIN((r.lng - :lng) * pi()/180 / 2), 2) )) ) <= :distance')
+                ->setParameter('lng', $search->getLng())
+                ->setParameter('lat', $search->getLat())
+                ->setParameter('distance', $search->getDistance());
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function RestaurantPerName()
+    {
+        $builder = $this->createQueryBuilder('r')
+            ->orderBy('r.name', 'ASC');
 
         return $builder->getQuery()->getResult();
     }
 
-    public function findType()
+    public function findLatest(): array
     {
-        $qb = $this->createQueryBuilder('r');
-        $qb->select('r.type')
-            ->groupBy('r.type')
-            ->orderBy('r.type', 'ASC');
-
-        $result = $qb
+        return $this->findRestaurantIDQuery()
+            ->setMaxResults(4)
             ->getQuery()
-            ->getArrayResult();
+            ->getResult();
+    }
 
-        return array_column($result, 'type');
+    private function findRestaurantsQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.name', 'ASC');
+    }
+
+    private function findRestaurantIDQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.id', 'DESC');
     }
 }
+

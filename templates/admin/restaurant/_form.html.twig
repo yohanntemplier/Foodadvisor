@@ -16,17 +16,26 @@
             {{ form_label(form.address, 'Adresse du restaurant') }}
             {{ form_widget(form.address) }}
         </div>
-        <div class="col-md-6 mt-4 mb-4">
+        <div class="col-md-3 mt-4 mb-4">
             {{ form_label(form.postal_code, 'Code postal') }}
             {{ form_widget(form.postal_code) }}
-
+        </div>
+        <div class="col-md-3 mt-4 mb-4">
+            {{ form_label(form.city, 'Ville') }}
+            {{ form_widget(form.city) }}
         </div>
     </div>
     <div class="row">
         <div class="col-md-6 mt-4 mb-4">
-            {{ form_label(form.city, 'Ville') }}
-            {{ form_widget(form.city) }}
+            {{ form_label(form.phone, 'Numéro de téléphone du restaurant') }}
+            {{ form_widget(form.phone) }}
         </div>
+        <div class="col-md-6 mt-4 mb-4">
+            {{ form_label(form.openingTime, 'Horaires d\'ouverture') }}
+            {{ form_widget(form.openingTime) }}
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6 mt-4 mb-4">
             {{ form_label(form.site, 'Site web du restaurant') }}
             {{ form_widget(form.site) }}
@@ -34,17 +43,41 @@
     </div>
     <div class="row">
         <div class="col-md-6 mt-4 mb-4">
+            {{ form_label(form.paiements, 'Moyens de paiement accéptés') }}
+            {{ form_widget(form.paiements) }}
+        </div>
+        <div class="col-md-6 mt-4 mb-4">
+            {{ form_label(form.caracteristics, 'Caractéristiques du restaurant') }}
+            {{ form_widget(form.caracteristics) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mt-4 mb-4">
             {{ form_label(form.cost, 'Coût moyen') }}
             {{ form_widget(form.cost) }}
         </div>
+        <div class="col-md-6 mt-4 mb-4">
+            {{ form_label(form.pictureFiles, 'Photos du restaurant') }}
+            {{ form_widget(form.pictureFiles) }}
+        </div>
     </div>
+            <div class="row flex justify-content-center flex-wrap">
+            {% for picture in restaurant.pictures %}
+                <div class="col-md-3" style="width: 100px; flex: none; margin: 20px">
+                    <img src="{{ vich_uploader_asset(picture, 'imageFile') }}" width="100" alt="">
+                    <a href="{{ path('admin_picture_delete', {id: picture.id}) }}" class="btn btn-danger"
+                       data-delete data-token="{{ csrf_token('delete' ~ picture.id) }}">Supprimer</a>
+                </div>
+            {% endfor %}
+            </div>
 
     <div class="form-row justify-content-center text-center m-2">
         <button type="submit" class="btn btn-primary btn-lg">
             {{ button_label|default('sauvegarder') }}
         </button>
     </div>
-    <a class="retour" href="{{ path('admin_restaurant_index') }}" class="btn-return btn-primary btn-lg">
+    <a href="{{ path('admin_restaurant_index') }}" class="btn-return btn-primary btn-lg">
         Retour à la liste des restaurants
     </a>
     {{ form_end(form) }}
+</div>

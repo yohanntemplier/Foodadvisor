@@ -2,10 +2,15 @@
 
 namespace App\Form;
 
+use App\Entity\Caracteristic;
+use App\Entity\Paiement;
 use App\Entity\Restaurant;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,16 +35,33 @@ class RestaurantType extends AbstractType
             ->add('city')
             ->add('address')
             ->add('postal_code')
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class)
             ->add('site')
-            ->add('pictures', HiddenType::class)
+            ->add('caracteristics', EntityType::class, [
+                'class' => Caracteristic::class,
+                'choice_label' => 'name',
+                'multiple' => true
+            ])
+            ->add('paiements', EntityType::class, [
+                'class' => Paiement::class,
+                'choice_label' => 'name',
+                'multiple' => true
+            ])
+            ->add('pictureFiles', FileType::class, [
+                'required' => false,
+                'multiple' => true
+            ])
             ->add('cost', ChoiceType::class,[
                 'choices'=>[
                     '€' => '€',
-                    '€-€€' => '€-€€',
-                    '€€-€€€' => '€€-€€€',
+                    '€€' => '€€',
                     '€€€' => '€€€',
+                    '€€€€' => '€€€€',
                 ]
             ])
+            ->add('phone')
+            ->add('openingTime', TextareaType::class)
         ;
     }
 

@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RestaurantRepository")
@@ -53,14 +57,65 @@ class Restaurant
     private $site;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $pictures;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $cost;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Caracteristic", inversedBy="restaurants")
+     */
+    private $caracteristics;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Paiement", inversedBy="restaurants")
+     */
+    private $paiements;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $openingTime;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="restaurant", orphanRemoval=true, cascade={"persist"})
+     */
+    private $pictures;
+
+    private $pictureFiles;
+
+    /**
+     * @ORM\Column(type="float", scale=4, precision=6)
+     */
+    private $lat;
+
+    /**
+     * @ORM\Column(type="float", scale=4, precision=7)
+     */
+    private $lng;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="restaurants")
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->caracteristics = new ArrayCollection();
+        $this->paiements = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -162,14 +217,213 @@ class Restaurant
         return $this;
     }
 
-    public function getPictures(): ?string
+     /**
+     * @return Collection|Caracteristic[]
+     */
+    public function getCaracteristics(): Collection
+    {
+        return $this->caracteristics;
+    }
+
+    public function addCaracteristic(Caracteristic $caracteristic): self
+    {
+        if (!$this->caracteristics->contains($caracteristic)) {
+            $this->caracteristics[] = $caracteristic;
+            $caracteristic->addRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaracteristic(Caracteristic $caracteristic): self
+    {
+        if ($this->caracteristics->contains($caracteristic)) {
+            $this->caracteristics->removeElement($caracteristic);
+            $caracteristic->removeRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Paiement[]
+     */
+    public function getPaiements(): Collection
+    {
+        return $this->paiements;
+    }
+
+    public function addPaiement(Paiement $paiement): self
+    {
+        if (!$this->paiements->contains($paiement)) {
+            $this->paiements[] = $paiement;
+            $paiement->addRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaiement(Paiement $paiement): self
+    {
+        if ($this->paiements->contains($paiement)) {
+            $this->paiements->removeElement($paiement);
+            $paiement->removeRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(int $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getOpeningTime(): ?string
+    {
+        return $this->openingTime;
+    }
+
+    public function setOpeningTime(string $openingTime): self
+    {
+        $this->openingTime = $openingTime;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Picture[]
+     */
+    public function getPictures(): Collection
     {
         return $this->pictures;
     }
 
-    public function setPictures(?string $pictures): self
+    public function getPicture(): ?Picture
     {
-        $this->pictures = $pictures;
+        if($this->pictures->isEmpty()) {
+            return null;
+        } else {
+            return $this->pictures->first();
+        }
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->contains($picture)) {
+            $this->pictures->removeElement($picture);
+            // set the owning side to null (unless already changed)
+            if ($picture->getRestaurant() === $this) {
+                $picture->setRestaurant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPictureFiles()
+    {
+        return $this->pictureFiles;
+    }
+
+    /**
+     * @param mixed $pictureFiles
+     * @return Restaurant
+     */
+    public function setPictureFiles($pictureFiles): self
+    {
+        foreach ($pictureFiles as $pictureFile){
+            $picture = new Picture();
+            $picture->setImageFile($pictureFile);
+            $this->addPicture($picture);
+        }
+
+        $this->pictureFiles = $pictureFiles;
+        return $this;
+    }
+
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(float $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    public function setLng(float $lng): self
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setRestaurants($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getRestaurants() === $this) {
+                $comment->setRestaurants(null);
+            }
+        }
 
         return $this;
     }

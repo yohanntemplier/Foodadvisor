@@ -1,0 +1,10 @@
+{% extends 'layoutAdmin.html.twig' %}
+
+{% block title %}Edit Paiement{% endblock %}
+
+{% block body %}
+    <h1 class="text text-center pt-3">Modifier le moyen de paiement</h1>
+
+    {{ include('admin/paiement/_form.html.twig', {'button_label': 'modifier'}) }}
+
+{% endblock %}

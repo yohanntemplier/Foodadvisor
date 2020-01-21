@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Restaurant favoris{% endblock %}
+
+{% block body %}
+    <div class ="container mt-4">
+        <h1 class ="text text-center mb-5">Les restaurants les mieux notés</h1>
+        <div class="row">
+            {% for restaurant in restaurants %}
+                <div class="col-md-4">
+                    <div class="card mb-5">
+                        {% if restaurant['restaurant'].picture %}
+                            <img src="{{ vich_uploader_asset(restaurant['restaurant'].picture,'imageFile') }}" alt="card-img-top" style="width: 100%; height: auto;">
+                        {% else %}
+                            <img src="{{'/images/restaurants/empty.jpg' }}" alt="card-img-top" style="width:100%; height: auto;">
+                        {% endif %}
+                        <h3 class="text-center pt-2">
+                            {% if (restaurant['averageScore']) is not null %}
+                                {% for i in 1.. restaurant['averageScore'] %}
+                                    <i class="fas fa-utensil-spoon" style="color:#EFD807;"></i>
+                                {% endfor %}
+                            {% else %}
+                                <i class="fas fa-meh" style="color:#EFD807;"></i>                    {% endif %}
+                        </h3>
+                        <h3 class="text text-center pt-3"><a href="{{ path('restaurant_show',{slug: restaurant['restaurant'].slug, id: restaurant['restaurant'].id}) }}">
+                                {{ restaurant['restaurant'].name }}</a>
+                        </h3>
+                        <h5 class="text-center pt-2">{{ restaurant['restaurant'].city }} ({{ restaurant['restaurant'].postalcode }})</h5>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="pagination justify-content-center">
+            {{ knp_pagination_render(restaurants) }}
+        </div>
+    </div>
+{% endblock %}
